@@ -1,0 +1,4 @@
+C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Tests.EndToEnd\bin\Debug\netcoreapp1.1\MessageBoard.Tests.EndToEnd.deps.json
+C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Tests.EndToEnd\bin\Debug\netcoreapp1.1\MessageBoard.Tests.EndToEnd.dll
+C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Tests.EndToEnd\obj\Debug\netcoreapp1.1\MessageBoard.Tests.EndToEnd.AssemblyInfo.cs
+C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Tests.EndToEnd\obj\Debug\netcoreapp1.1\MessageBoard.Tests.EndToEnd.csprojResolveAssemblyReference.cache
