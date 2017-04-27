@@ -1,7 +1,0 @@
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\bin\Debug\netcoreapp1.1\MessageBoard.Core.deps.json
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\bin\Debug\netcoreapp1.1\MessageBoard.Core.dll
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\bin\Debug\netcoreapp1.1\MessageBoard.Core.pdb
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\obj\Debug\netcoreapp1.1\MessageBoard.Core.csprojResolveAssemblyReference.cache
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\obj\Debug\netcoreapp1.1\MessageBoard.Core.AssemblyInfo.cs
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\obj\Debug\netcoreapp1.1\MessageBoard.Core.dll
-C:\Users\Admin\Documents\GitHub\MessageBoard\MessageBoard.Core\obj\Debug\netcoreapp1.1\MessageBoard.Core.pdb
