@@ -26,7 +26,7 @@ namespace MessengerBoard.Infrastructure.Services
             return _mapper.Map<User, UserDto>(user);
         }
 
-        public async Task RegisterAsync(string email, string username, string password)
+        public async Task RegisterAsync(string email, string username, string password, string role)
         {
             var user = await _userRepository.GetAsync(email);
             if (user != null)
@@ -34,7 +34,7 @@ namespace MessengerBoard.Infrastructure.Services
                 throw new Exception($"User with email: '{email}' already exist.");
             }
             var salt = Guid.NewGuid().ToString("N");
-            user = new User(email, username, password, salt);
+            user = new User(email, username, password, salt, role);
             await _userRepository.AddAsync(user);
         }
     }
