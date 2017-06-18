@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using MessengerBoard.Infrastructure.Commands;
-using MessengerBoard.Infrastructure.Commands.Users;
+using MessageBoard.Infrastructure.Commands;
+using MessageBoard.Infrastructure.Commands.Users;
 using Microsoft.AspNetCore.Mvc;
-using MessengerBoard.Infrastructure.Services;
+using MessageBoard.Infrastructure.Services;
 
 namespace MessageBoard.Api.Controllers
 {
@@ -16,6 +16,13 @@ namespace MessageBoard.Api.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var users = await _userService.BrowseAsync();
+            return Json(users);
+        }
+
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
@@ -27,7 +34,7 @@ namespace MessageBoard.Api.Controllers
             return Json(user);
         }
 
-        [HttpPost("")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateUser command)
         {
             await CommandDispatcher.DispatchAsync(command);

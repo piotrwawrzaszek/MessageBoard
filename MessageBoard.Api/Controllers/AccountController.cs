@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MessengerBoard.Infrastructure.Services;
-using MessengerBoard.Infrastructure.Commands;
-using MessengerBoard.Infrastructure.Commands.Users;
+using MessageBoard.Infrastructure.Services;
+using MessageBoard.Infrastructure.Commands;
+using MessageBoard.Infrastructure.Commands.Users;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MessageBoard.Api.Controllers
@@ -19,20 +19,6 @@ namespace MessageBoard.Api.Controllers
             : base(commandDispatcher)
         {
             _jwtHandler = handler;
-        }
-
-        [HttpGet("token")]
-        public IActionResult Get()
-        {
-            var token =_jwtHandler.CreateToken("user1@email.com", "user");
-            return Json(token);
-        }
-
-        [HttpGet("auth")]
-        [Authorize(Policy = "admin")]
-        public IActionResult GetAuth()
-        {
-            return Content("Auth");
         }
 
         [HttpPut("password")]

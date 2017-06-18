@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
-using MessengerBoard.Infrastructure.Commands.Users;
-using MessengerBoard.Infrastructure.DTO;
+using MessageBoard.Infrastructure.Commands.Users;
+using MessageBoard.Infrastructure.DTO;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -15,6 +15,14 @@ namespace MessageBoard.Tests.EndToEnd.Controllers
             var response = await Client.GetAsync($"users/{email}");
             var responseString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserDto>(responseString);
+        }
+
+        [Fact]
+        public async Task given_valid_email_user_should_exist()
+        {
+            const string email = "user1@email.com";
+            var user = await GetUserAsync(email);
+            user.Email.ShouldBeEquivalentTo(email);
         }
 
         [Fact]
@@ -41,14 +49,6 @@ namespace MessageBoard.Tests.EndToEnd.Controllers
 
             var user = await GetUserAsync(command.Email);
             user.Email.ShouldBeEquivalentTo(command.Email);
-        }
-
-        [Fact]
-        public async Task given_valid_email_user_should_exist()
-        {
-            const string email = "user1@email.com";
-            var user = await GetUserAsync(email);
-            user.Email.ShouldBeEquivalentTo(email);
         }
     }
 }

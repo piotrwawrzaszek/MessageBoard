@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
-using MessengerBoard.Infrastructure.Commands.Users;
+using MessageBoard.Infrastructure.Commands.Users;
 using Xunit;
 
 namespace MessageBoard.Tests.EndToEnd.Controllers

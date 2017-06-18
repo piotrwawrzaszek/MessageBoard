@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using MessageBoard.Core.Domain;
 using MessageBoard.Core.Repositories;
-using MessengerBoard.Infrastructure.Services;
+using MessageBoard.Infrastructure.Services;
 using Moq;
 using System.Threading.Tasks;
 using Xunit;
@@ -18,7 +19,7 @@ namespace MessageBoard.Tests.Services
             var mapperMock = new Mock<IMapper>();
 
             var userService = new UserService(userRepositoryMock.Object, encrypterMock.Object, mapperMock.Object);
-            await userService.RegisterAsync("user@email.com", "user", "secret", "user");
+            await userService.RegisterAsync(Guid.NewGuid(), "user@email.com", "user", "secret", "user");
 
             userRepositoryMock.Verify(x => x.AddAsync(It.IsAny<User>()), Times.Once);
         }
@@ -33,7 +34,7 @@ namespace MessageBoard.Tests.Services
             var userService = new UserService(userRepositoryMock.Object, encrypterMock.Object, mapperMock.Object);
             await userService.GetAsync("user@email.com");
 
-            var user = new User("user@email.com", "user", "secret", "salt", "user");
+            var user = new User(Guid.NewGuid(), "user@email.com", "user", "secret", "salt", "user");
 
             userRepositoryMock.Setup(x => x.GetAsync(It.IsAny<string>()))
                               .ReturnsAsync(user);

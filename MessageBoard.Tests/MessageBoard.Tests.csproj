@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MessengerBoard.Infrastructure\MessengerBoard.Infrastructure.csproj" />
+    <ProjectReference Include="..\MessageBoard.Infrastructure\MessageBoard.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using MessageBoard.Core.Repositories;
-using MessengerBoard.Infrastructure.IoC;
-using MessengerBoard.Infrastructure.IoC.Modules;
-using MessengerBoard.Infrastructure.Mappers;
-using MessengerBoard.Infrastructure.Repositories;
-using MessengerBoard.Infrastructure.Services;
-using MessengerBoard.Infrastructure.Settings;
+using MessageBoard.Infrastructure.IoC;
+using MessageBoard.Infrastructure.IoC.Modules;
+using MessageBoard.Infrastructure.Mappers;
+using MessageBoard.Infrastructure.Repositories;
+using MessageBoard.Infrastructure.Services;
+using MessageBoard.Infrastructure.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +41,7 @@ namespace MessageBoard.Api
         {
             // Add framework services.
             services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole("admin")));
+            services.AddMemoryCache();
             services.AddMvc();
 
             var builder = new ContainerBuilder();
@@ -69,6 +70,12 @@ namespace MessageBoard.Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
                 }
             });
+            var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
+            if (generalSettings.SeedData)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+                dataInitializer.SeedAsync();
+            }
 
             app.UseMvc();
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());

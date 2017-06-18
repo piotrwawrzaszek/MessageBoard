@@ -17,9 +17,9 @@ namespace MessageBoard.Core.Domain
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
 
-        public User(string email, string username, string password, string salt, string role)
+        public User(Guid id, string email, string username, string password, string salt, string role)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Email = email.ToLowerInvariant();
             Username = username;
             Password = password;

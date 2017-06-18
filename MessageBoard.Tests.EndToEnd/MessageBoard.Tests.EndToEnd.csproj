@@ -18,6 +18,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MessageBoard.Api\MessageBoard.Api.csproj" />
+	<ProjectReference Include="..\MessageBoard.Infrastructure\MessageBoard.Infrastructure.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup> 
+	<Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
