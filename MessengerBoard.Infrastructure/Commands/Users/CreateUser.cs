@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MessengerBoard.Infrastructure.Commands.Users
+﻿namespace MessengerBoard.Infrastructure.Commands.Users
 {
     public class CreateUser : ICommand
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MessageBoard.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
         Task<User> GetAsync(Guid id);
         Task<User> GetAsync(string email);
