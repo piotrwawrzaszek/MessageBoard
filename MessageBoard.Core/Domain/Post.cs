@@ -39,14 +39,14 @@ namespace MessageBoard.Core.Domain
             protected set { _postChildren = new HashSet<Post>(value); }
         }
 
-        public Post(Group group, User author, string content, Category category)
+        public Post(Guid id, Group group, User author, string content, Category category)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             SetGroup(group);
             SetAuthor(author);
             SetContent(content);
             SetCategory(category);
-            IsActive = false;
+            Activate();
             CreatedAt = DateTime.UtcNow;
         }
 

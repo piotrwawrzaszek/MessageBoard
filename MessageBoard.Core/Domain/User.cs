@@ -127,9 +127,9 @@ namespace MessageBoard.Core.Domain
             {
                 throw new Exception("Password must contain at least 4 characters.");
             }
-            if (password.Length > 20)
+            if (password.Length > 100)
             {
-                throw new Exception("Password can not contain more than 20 characters.");
+                throw new Exception("Password can not contain more than 100 characters.");
             }
             Password = password;
             Salt = salt;

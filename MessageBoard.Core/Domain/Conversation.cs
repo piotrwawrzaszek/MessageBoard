@@ -12,6 +12,7 @@ namespace MessageBoard.Core.Domain
         public Guid Id { get; protected set; }
         public User Admin { get; protected set; }
         public string Name { get; protected set; }
+        public bool IsActive { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
 
@@ -32,6 +33,7 @@ namespace MessageBoard.Core.Domain
             Id = Guid.NewGuid();
             SetAdmin(creator);
             SetName(name);
+            Activate();
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -52,6 +54,18 @@ namespace MessageBoard.Core.Domain
                 throw new Exception("Conversation name can not be empty.");
             }
             Name = name;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Activate()
+        {
+            IsActive = true;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
             UpdatedAt = DateTime.UtcNow;
         }
 

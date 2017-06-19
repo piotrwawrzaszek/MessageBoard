@@ -11,6 +11,8 @@ namespace MessageBoard.Infrastructure.Mappers
             {
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Category, CategoryDto>();
+                cfg.CreateMap<Post, PostDto>();
+                cfg.CreateMap<Post, PostDetailsDto>();
             })
             .CreateMapper();
     }

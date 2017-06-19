@@ -36,8 +36,8 @@ namespace MessageBoard.Infrastructure.Services
                 {
                     new Subcategory("PC", "Find the hottest PC gaming gear including computers, accessories," +
                                           " components, games, and more."),
-                    new Subcategory("Console", "The video game console realm is much bigger than the heavily" +
-                                               " marketed Xbox One and Sony Playstation 4 suggest.")
+                    new Subcategory("Console", "The video game console realm is much bigger than the " +
+                                               "heavily marketed Microsoft and Sony suggest.")
                 }
             };
 
@@ -73,16 +73,16 @@ namespace MessageBoard.Infrastructure.Services
             return await Task.FromResult(new CategoryDto
             {
                 Type = type,
-                Name = name,
+                Name = category.Name,
                 Description = category.Description
             });
         }
 
-        //mozliwe bledne zapytanie Linq
         public async Task<IEnumerable<CategoryDto>> GetAllAsync()
             => await Task.FromResult(AvailableCategories.GroupBy(x => x.Key)
                 .SelectMany(g => g.SelectMany(c => c.Value.Select(v => new CategoryDto
                 {
+                    Type = c.Key,
                     Name = v.Name,
                     Description = v.Description
                 }))));

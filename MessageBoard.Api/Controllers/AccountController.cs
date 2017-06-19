@@ -21,6 +21,7 @@ namespace MessageBoard.Api.Controllers
             _jwtHandler = handler;
         }
 
+        //[Authorize]
         [HttpPut("password")]
         public async Task<IActionResult> Put([FromBody] ChangeUserPassword command)
         {
