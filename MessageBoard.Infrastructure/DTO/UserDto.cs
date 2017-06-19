@@ -9,7 +9,6 @@ namespace MessageBoard.Infrastructure.DTO
         public string Email { get; set; }
         public bool IsActive { get; set; }
         public string Username { get; set; }
-        public string Fullname { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

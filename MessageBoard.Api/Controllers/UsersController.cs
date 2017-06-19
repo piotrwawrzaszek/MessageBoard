@@ -38,7 +38,6 @@ namespace MessageBoard.Api.Controllers
         public async Task<IActionResult> Post([FromBody] CreateUser command)
         {
             await CommandDispatcher.DispatchAsync(command);
-
             return Created($"users/{command.Email}", new object());
         }
     }

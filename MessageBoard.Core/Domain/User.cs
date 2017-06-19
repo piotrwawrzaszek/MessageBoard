@@ -1,11 +1,17 @@
 ﻿using System;
-using System.Net.Mail;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MessageBoard.Core.Domain
 {
     public class User
     {
+        private ISet<Post> _upvotedPosts = new HashSet<Post>();
+        private ISet<Post> _downvotedPosts = new HashSet<Post>();
+        private ISet<User> _friends = new HashSet<User>();
+
         public Guid Id { get; protected set; }
         public string Salt { get; protected set; }
         public string Role { get; protected set; }
@@ -13,19 +19,34 @@ namespace MessageBoard.Core.Domain
         public bool IsActive { get; protected set; }
         public string Username { get; protected set; }
         public string Password { get; protected set; }
-        public string Fullname { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
+
+        public IEnumerable<User> Friends
+        {
+            get { return _friends; }
+            protected set { _friends = new HashSet<User>(value); }
+        }
+
+        public IEnumerable<Post> UpvotedPosts
+        {
+            get { return _upvotedPosts; }
+            protected set { _upvotedPosts = new HashSet<Post>(value); } 
+            
+        }
+        public IEnumerable<Post> DownvotedPosts {
+            get { return _downvotedPosts; }
+            protected set { _downvotedPosts = new HashSet<Post>(value); }
+        }
 
         public User(Guid id, string email, string username, string password, string salt, string role)
         {
             Id = id;
-            Email = email.ToLowerInvariant();
-            Username = username;
-            Password = password;
-            Salt = salt;
-            Role = role;
-            IsActive = true;
+            SetEmail(email);
+            SetUsername(username);
+            SetPassword(password, salt);
+            SetRole(role);
+            Activate();
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -39,18 +60,18 @@ namespace MessageBoard.Core.Domain
 
         public void SetUsername(string username)
         {
-            //var regex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
+            var regex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
             if (Username == username)
             {
                 return;
             }
-            //if (!regex.IsMatch(username))
-            //{
-            //    throw new Exception("Username is invalid");
-            //}
+            if (!regex.IsMatch(username))
+            {
+                throw new Exception("Username is invalid.");
+            }
             if (string.IsNullOrEmpty(username))
             {
-                throw new Exception("Username can not be empty");
+                throw new Exception("Username can not be empty.");
             }
             Username = username.ToLowerInvariant();
             UpdatedAt = DateTime.UtcNow;
@@ -64,11 +85,11 @@ namespace MessageBoard.Core.Domain
             }
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new Exception("Email can not be empty");
+                throw new Exception("Email can not be empty.");
             }
-            if (!IsMailValid(email))
-            {
-                throw new Exception("Email is invalid");
+            if (!new EmailAddressAttribute().IsValid(email))
+            {    
+                throw new Exception("Email is invalid.");
             }
             Email = email.ToLowerInvariant();
             UpdatedAt = DateTime.UtcNow;
@@ -88,7 +109,7 @@ namespace MessageBoard.Core.Domain
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void SetPassword(string password)
+        public void SetPassword(string password, string salt)
         {
             if (Password == password)
             {
@@ -97,6 +118,10 @@ namespace MessageBoard.Core.Domain
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new Exception("Password can not be empty");
+            }
+            if (string.IsNullOrWhiteSpace(salt))
+            {
+                throw new Exception("Salt can not be empty.");
             }
             if (password.Length < 4)
             {
@@ -107,20 +132,64 @@ namespace MessageBoard.Core.Domain
                 throw new Exception("Password can not contain more than 20 characters.");
             }
             Password = password;
+            Salt = salt;
             UpdatedAt = DateTime.UtcNow;
         }
 
-        private static bool IsMailValid(string email)
+        public void Activate()
         {
-            try
+            IsActive = true;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Deactivate()
+        {
+            IsActive = false;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void AddUpvotedPost(Post post)
+        {
+            var upvotedPost = UpvotedPosts.SingleOrDefault(x => x.Id == post.Id);
+            if (upvotedPost != null)
             {
-                var mail = new MailAddress(email);
-                return true;
+                throw new Exception($"User: {Username} already upvoted post: {post.Content.Substring(0,20)}...");
             }
-            catch (FormatException)
+            _upvotedPosts.Add(post);
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void RemoveUpvotingUser(Post post)
+        {
+            var upvotedPost = UpvotedPosts.SingleOrDefault(x => x.Id == post.Id);
+            if (upvotedPost == null)
             {
-                return false;
+                throw new Exception($"Post: {post.Content.Substring(0,20)}... for user: {Username} not found.");
             }
+            _upvotedPosts.Remove(post);
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void AddDownvotedPost(Post post)
+        {
+            var downvotedPost = DownvotedPosts.SingleOrDefault(x => x.Id == post.Id);
+            if (downvotedPost != null)
+            {
+                throw new Exception($"User: {Username} already downvoted post: {post.Content.Substring(0, 20)}...");
+            }
+            _downvotedPosts.Add(post);
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void RemoveDownvotingUser(Post post)
+        {
+            var downvotedPost = DownvotedPosts.SingleOrDefault(x => x.Id == post.Id);
+            if (downvotedPost == null)
+            {
+                throw new Exception($"Post: {post.Content.Substring(0, 20)}... for user: {Username} not found.");
+            }
+            _downvotedPosts.Remove(post);
+            UpdatedAt = DateTime.UtcNow;
         }
     }
 }

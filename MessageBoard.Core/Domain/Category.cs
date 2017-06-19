@@ -1,25 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MessageBoard.Core.Domain
 {
     public class Category
     {
-        public Guid Id { get; protected set; }
+        public string Type { get; protected set; }
         public string Name { get; protected set; }
         public string Description { get; protected set; }
-        public IEnumerable<Post> Posts { get; protected set; }
 
-        public Category(string name, string description)
+        protected Category(string type, string name, string description)
         {
-            Id = new Guid();
-            Name = name;
-            Description = description;
+            SetType(type);
+            SetName(name);
+            SetDescription(description);
         }
 
         protected Category()
         {
         }
+
+        private void SetType(string type)
+        {
+            if (string.IsNullOrWhiteSpace(type))
+            {
+                throw new Exception("Type name can not be empty.");
+            }
+            if (Name == type)
+            {
+                return;
+            }
+            Type = type;
+        }
+
+        private void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception("Category name can not be empty.");
+            }
+            if (Name == name)
+            {
+                return;
+            }
+            Name = name;
+        }
+
+        private void SetDescription(string description)
+        {
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                throw new Exception("Description can not be empty.");
+            }
+            if (Description == description)
+            {
+                return;
+            }
+            Description = description;
+        }
+
+        public static Category Create(string type, string name, string description)
+            => new Category(type, name, description);
     }
 }
