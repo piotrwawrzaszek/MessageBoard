@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBoard.Tests", "Messa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBoard.Tests.EndToEnd", "MessageBoard.Tests.EndToEnd\MessageBoard.Tests.EndToEnd.csproj", "{E37F4F6D-3ACD-4638-B443-AA51B478C7CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerBoard.Infrastructure", "MessengerBoard.Infrastructure\MessengerBoard.Infrastructure.csproj", "{04AF9CA9-EBCD-48D3-B1B3-128D974605F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBoard.Infrastructure", "MessageBoard.Infrastructure\MessageBoard.Infrastructure.csproj", "{04AF9CA9-EBCD-48D3-B1B3-128D974605F3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{863C448D-B62E-4D8A-B135-7FE8FDF10450} = {863C448D-B62E-4D8A-B135-7FE8FDF10450}
 	EndProjectSection
